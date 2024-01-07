@@ -81,7 +81,7 @@
         app:layout_constraintTop_toBottomOf="@id/button_login" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/text_view_register"
+        android:id="@+id/button_register"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="New here?   Register"
