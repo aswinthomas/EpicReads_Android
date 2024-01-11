@@ -1,4 +1,4 @@
-package com.aswindev.epicreads
+package com.aswindev.epicreads.ui
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity

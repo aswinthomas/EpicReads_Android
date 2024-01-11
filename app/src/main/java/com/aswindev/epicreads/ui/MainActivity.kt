@@ -1,4 +1,4 @@
-package com.aswindev.epicreads
+package com.aswindev.epicreads.ui
 
 import android.content.Intent
 import android.content.res.Configuration
@@ -10,11 +10,12 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import com.aswindev.epicreads.Book
+import com.aswindev.epicreads.BooksAdapter
+import com.aswindev.epicreads.BooksViewModel
+import com.aswindev.epicreads.R
 import com.aswindev.epicreads.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding

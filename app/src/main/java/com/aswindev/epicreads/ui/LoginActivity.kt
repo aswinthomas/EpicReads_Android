@@ -1,22 +1,14 @@
-package com.aswindev.epicreads
+package com.aswindev.epicreads.ui
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.InputType
 import android.util.Log
-import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.LinearLayout
 import androidx.appcompat.app.AlertDialog
-import androidx.core.view.marginLeft
-import androidx.core.view.marginRight
-import androidx.core.view.setPadding
 import com.aswindev.epicreads.databinding.ActivityLoginBinding
-import com.google.android.material.internal.ViewUtils.dpToPx
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {
