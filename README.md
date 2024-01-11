@@ -1,7 +1,7 @@
 # EpicReads Book Recommendation App
 
 <p float="left">
-    <img src="app/src/main/ic_launcher-playstore.png" width="270" />
+    <img src="app/src/main/ic_launcher-playstore.png" width="200" />
     <a href='https://play.google.com/store/apps/details?id=com.aswindev.epicreads&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'> <img alt='Get it on Google Play' width='540' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/></a>
 </p>
 
