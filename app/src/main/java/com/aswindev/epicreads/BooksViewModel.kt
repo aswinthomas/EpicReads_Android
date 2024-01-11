@@ -46,10 +46,10 @@ class BooksViewModel : ViewModel() {
         }
     }
 
-
     private fun fetchBookCover(isbn: String, callback: (List<BookItem>) -> Unit) {
         val query = "isbn:$isbn"
-        RetrofitClient.service.searchBooks(query).enqueue(object : Callback<GoogleBooksResponse> {
+        val apiKey = BuildConfig.GOOGLE_BOOKS_API_KEY
+        RetrofitClient.service.searchBooks(query, apiKey).enqueue(object : Callback<GoogleBooksResponse> {
             override fun onResponse(call: Call<GoogleBooksResponse>, response: Response<GoogleBooksResponse>) {
                 if (response.isSuccessful) {
                     val bookItems = response.body()?.items ?: emptyList()

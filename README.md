@@ -13,8 +13,7 @@ The following concepts are used
 </p>
 <p float="left">
     <img src="pics/home.png" width="270" />
-    <img src="pics/homelandscape.png" width="270" />
-    <img src="pics/cycle.png" width="270" />
+    <img src="pics/homelandscape.png" width="540" />
 </p>
 
  

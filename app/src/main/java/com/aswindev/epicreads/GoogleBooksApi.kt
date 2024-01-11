@@ -6,7 +6,10 @@ import retrofit2.http.Query
 
 interface GoogleBooksApiService {
     @GET("volumes")
-    fun searchBooks(@Query("q") query: String): Call<GoogleBooksResponse>
+    fun searchBooks(
+        @Query("q") query: String,
+        @Query("key") apiKey: String
+    ): Call<GoogleBooksResponse>
 }
 
 data class GoogleBooksResponse(

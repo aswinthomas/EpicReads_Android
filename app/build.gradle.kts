@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -19,11 +21,22 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        buildConfig = true
+    }
+
+    val secretPropertiesFile = rootProject.file("secret.properties")
+    val secretProperties = Properties()
+    if (secretPropertiesFile.exists()) {
+        secretProperties.load(secretPropertiesFile.inputStream())
     }
     buildTypes {
+        debug {
+            buildConfigField("String", "GOOGLE_BOOKS_API_KEY", "\"${secretProperties["GOOGLE_BOOKS_API_KEY"]}\"")
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            buildConfigField("String", "GOOGLE_BOOKS_API_KEY", "\"${secretProperties["GOOGLE_BOOKS_API_KEY"]}\"")
         }
     }
     compileOptions {
@@ -33,6 +46,7 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
 }
 
 dependencies {
