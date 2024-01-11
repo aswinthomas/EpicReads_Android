@@ -34,12 +34,25 @@ class LoginActivity : AppCompatActivity() {
         }
         binding.buttonRegister.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
+            finish()
         }
         binding.textViewForgotPassword.setOnClickListener { showResetPasswordDialog() }
     }
 
 
     private fun loginUser(email: String, password: String) {
+        if (email.isEmpty()) {
+            binding.editTextEmail.error = "Email is required"
+            binding.editTextEmail.requestFocus()
+            return
+        }
+
+        if (password.isEmpty()) {
+            binding.editTextPassword.error = "Password is required"
+            binding.editTextPassword.requestFocus()
+            return
+        }
+
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {

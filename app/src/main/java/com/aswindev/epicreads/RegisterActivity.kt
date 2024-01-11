@@ -21,11 +21,26 @@ class RegisterActivity : AppCompatActivity() {
         binding.buttonRegister.setOnClickListener {
             registerUser(binding.editTextEmail.text.toString().trim(), binding.editTextPassword.text.toString().trim())
         }
-
+        binding.buttonLogin.setOnClickListener {
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+        }
 
     }
 
     private fun registerUser(email: String, password: String) {
+        if (email.isEmpty()) {
+            binding.editTextEmail.error = "Email is required"
+            binding.editTextEmail.requestFocus()
+            return
+        }
+
+        if (password.isEmpty()) {
+            binding.editTextPassword.error = "Password is required"
+            binding.editTextPassword.requestFocus()
+            return
+        }
+
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if(task.isSuccessful) {
