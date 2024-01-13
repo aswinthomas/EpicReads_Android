@@ -30,14 +30,23 @@ class SearchBooksViewModel : ViewModel() {
         val fetchedBooks = mutableListOf<Book>()
 
         fetchBookCover(query) { bookItems ->
-            bookItems.forEach {bookItem ->
+            bookItems.forEach { bookItem ->
                 val title = bookItem.volumeInfo.title
-                val coverUrl = bookItem.volumeInfo?.imageLinks?.thumbnail
+                val subtitle = bookItem.volumeInfo.subtitle
+                val authors = bookItem.volumeInfo.authors
+                val coverUrl = bookItem.volumeInfo.imageLinks?.thumbnail
                     ?: "https://covers.openlibrary.org/b/isbn/9781494563165-M.jpg"
                 val secureCoverUrl = coverUrl.replace("http://", "https://")
                 Log.d("SearchBooksViewModel", "Title: $title")
                 Log.d("SearchBooksViewModel", "Cover url: $secureCoverUrl")
-                fetchedBooks.add(Book(imageUrl = secureCoverUrl, title = title))
+                fetchedBooks.add(
+                    Book(
+                        imageUrl = secureCoverUrl,
+                        title = title ?: "",
+                        subtitle = subtitle ?: "",
+                        authors = authors
+                    )
+                )
             }
             callback(fetchedBooks)
         }

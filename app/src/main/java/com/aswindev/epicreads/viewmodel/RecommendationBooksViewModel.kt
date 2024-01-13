@@ -80,21 +80,22 @@ class RecommendationBooksViewModel : ViewModel() {
             Book(isbn = "9781577314806"),
             Book(isbn = "9780307465351"),
             Book(isbn = "9781501111105"),
-            Book(isbn = "9780062457738"),
-            Book(isbn = "9781444787011"),
-            Book(isbn = "9780307465351"),
-            Book(isbn = "9780062641540"),
-            Book(isbn = "9781444787011"),
-            Book(isbn = "9780380810338"),
-            Book(isbn = "9781451639612"),
-            Book(isbn = "9780767922715"),
-            Book(isbn = "9781401958759"),
-            Book(isbn = "9780062316110"),
-            Book(isbn = "9781444787011"),
-            Book(isbn = "9780060835910"),
-            Book(isbn = "9780307338204"),
-            Book(isbn = "9780061122415"),
-            Book(isbn = "9780671027032")
+            Book(isbn = "9780062457738")
+//            ,
+//            Book(isbn = "9781444787011"),
+//            Book(isbn = "9780307465351"),
+//            Book(isbn = "9780062641540"),
+//            Book(isbn = "9781444787011"),
+//            Book(isbn = "9780380810338"),
+//            Book(isbn = "9781451639612"),
+//            Book(isbn = "9780767922715"),
+//            Book(isbn = "9781401958759"),
+//            Book(isbn = "9780062316110"),
+//            Book(isbn = "9781444787011"),
+//            Book(isbn = "9780060835910"),
+//            Book(isbn = "9780307338204"),
+//            Book(isbn = "9780061122415"),
+//            Book(isbn = "9780671027032")
         )
     }
 }

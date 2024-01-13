@@ -1,5 +1,6 @@
 package com.aswindev.epicreads.ui
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
@@ -18,6 +19,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.aswindev.epicreads.Book
 import com.aswindev.epicreads.BooksAdapter
+import com.aswindev.epicreads.OnBookItemClickListener
+import com.aswindev.epicreads.databinding.DialogBookDetailsBinding
 import com.aswindev.epicreads.databinding.DialogSearchBinding
 import com.aswindev.epicreads.databinding.FragmentSearchBinding
 import com.aswindev.epicreads.viewmodel.SearchBooksViewModel
@@ -68,7 +71,29 @@ class SearchFragment : Fragment() {
     }
 
     private fun createViewModel() {
-        adapter = BooksAdapter(mutableListOf())
+        val dialogBinding = DialogBookDetailsBinding.inflate(layoutInflater)
+        val listener = object : OnBookItemClickListener {
+            override fun onBookItemClick(book: Book) {
+                val title = book.title + ": " + book.subtitle
+                var authors = ""
+                for ((index, author) in book.authors.withIndex()) {
+                    authors += author
+                    if (index < book.authors.size-1) {
+                        authors += ", "
+                    }
+                }
+                dialogBinding.textViewBookTitleValue.setText(title)
+                dialogBinding.textViewAuthorsValue.setText(authors)
+                AlertDialog.Builder(requireContext())
+                    .setTitle("Book Details")
+                    .setView(dialogBinding.root)
+                    .setPositiveButton("Ok") { _, _ ->
+
+                    }
+                    .show()
+            }
+        }
+        adapter = BooksAdapter(mutableListOf(), listener)
         binding.recyclerView.adapter = adapter
         viewModel = ViewModelProvider(this).get(SearchBooksViewModel::class.java)
         viewModel.getBooks().observe(viewLifecycleOwner, Observer { books ->
@@ -80,6 +105,4 @@ class SearchFragment : Fragment() {
         val inputMethodManager = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
         inputMethodManager?.hideSoftInputFromWindow(view?.windowToken, 0)
     }
-
-
 }

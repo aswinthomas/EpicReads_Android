@@ -9,8 +9,12 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.target.Target
 
+interface OnBookItemClickListener {
+    fun onBookItemClick(book: Book)
+}
 
-class BooksAdapter(private val books: MutableList<Book>) : RecyclerView.Adapter<BooksAdapter.ViewHolder>() {
+class BooksAdapter(private val books: MutableList<Book>, private val onClickListener: OnBookItemClickListener? = null) :
+    RecyclerView.Adapter<BooksAdapter.ViewHolder>() {
 
     override fun getItemCount() = books.size
 
@@ -21,6 +25,9 @@ class BooksAdapter(private val books: MutableList<Book>) : RecyclerView.Adapter<
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(books[position])
+        holder.itemView.setOnClickListener {
+            onClickListener?.onBookItemClick(books[position])
+        }
     }
 
     inner class ViewHolder(private val binding: ItemBookBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -49,6 +56,7 @@ class BooksAdapter(private val books: MutableList<Book>) : RecyclerView.Adapter<
 
 data class Book(
     val title: String = "",
+    val subtitle: String = "",
     val isbn: String = "",
     val imageUrl: String = "",
     val authors: List<String> = listOf()
