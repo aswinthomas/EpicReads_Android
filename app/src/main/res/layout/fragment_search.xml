@@ -6,26 +6,6 @@
     android:layout_height="match_parent"
     android:padding="16dp">
 
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/text_input_layout_search"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_text_search"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inputType="text"
-            android:imeOptions="actionSearch"
-            android:hint="Search by title"
-            android:textSize="18sp"
-            tools:text="Paulo Coelo" />
-    </com.google.android.material.textfield.TextInputLayout>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="0dp"
@@ -34,7 +14,15 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_input_layout_search"
+        app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/item_book" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floating_action_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="36dp"
+        android:src="@drawable/baseline_search_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

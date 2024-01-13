@@ -33,11 +33,13 @@ class RecommendationBooksViewModel : ViewModel() {
         books.forEachIndexed { index, book ->
             fetchBookCover(book.isbn) { bookItems ->
                 val bookItem = bookItems.firstOrNull()
+                val title = bookItem?.volumeInfo?.title
                 val coverUrl = bookItem?.volumeInfo?.imageLinks?.thumbnail
                     ?: "https://covers.openlibrary.org/b/isbn/9781494563165-M.jpg"
                 val secureCoverUrl = coverUrl.replace("http://", "https://")
-                val updatedBook = book.copy(imageUrl = secureCoverUrl)
-                Log.d("RecommendationBooksViewModel", "Cover url $secureCoverUrl")
+                val updatedBook = book.copy(imageUrl = secureCoverUrl, title = title?:"")
+                Log.d("SearchBooksViewModel", "Title: $title")
+                Log.d("SearchBooksViewModel", "Cover url: $secureCoverUrl")
 
                 fetchedBooks[index] = updatedBook
                 fetchCounter++

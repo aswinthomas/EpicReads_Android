@@ -5,6 +5,7 @@ import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.fragment.app.commit
 import com.aswindev.epicreads.R
@@ -70,6 +71,12 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             true
+        }
+        val orientation = resources.configuration.orientation
+        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            binding.bottomNavView.visibility = View.VISIBLE
+        } else {
+            binding.bottomNavView.visibility = View.GONE
         }
     }
 

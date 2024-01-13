@@ -19,8 +19,12 @@ The following concepts are used
     <img src="pics/drawer.png" width="270" />
 </p>
 <p float="left">
-    <img src="pics/home.png" width="270" />
-    <img src="pics/homelandscape.png" width="540" />
+    <img src="pics/discover.png" width="270" />
+    <img src="pics/discoverlandscape.png" width="540" />
+</p>
+<p float="left">
+    <img src="pics/search.png" width="270" />
+    <img src="pics/searchlandscape.png" width="540" />
 </p>
 
  

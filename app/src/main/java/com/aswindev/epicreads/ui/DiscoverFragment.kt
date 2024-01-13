@@ -33,7 +33,7 @@ class DiscoverFragment: Fragment() {
     }
 
     private fun createViewModel(savedInstanceState: Bundle?) {
-        adapter = BooksAdapter(emptyList())
+        adapter = BooksAdapter(mutableListOf())
         binding.recyclerView.adapter = adapter
         viewModel = ViewModelProvider(this).get(RecommendationBooksViewModel::class.java)
         viewModel.getBooks().observe(viewLifecycleOwner, Observer { books ->

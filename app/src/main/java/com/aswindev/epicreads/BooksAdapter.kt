@@ -10,7 +10,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.target.Target
 
 
-class BooksAdapter(private var books: List<Book>) : RecyclerView.Adapter<BooksAdapter.ViewHolder>() {
+class BooksAdapter(private val books: MutableList<Book>) : RecyclerView.Adapter<BooksAdapter.ViewHolder>() {
 
     override fun getItemCount() = books.size
 
@@ -37,10 +37,13 @@ class BooksAdapter(private var books: List<Book>) : RecyclerView.Adapter<BooksAd
     }
 
     fun update(newBooks: List<Book>) {
-        Log.d("BooksAdapter", "Got new ${newBooks.size} books")
-        books = newBooks
+        books.clear()
+        books.addAll(newBooks)
+        for ((index, book) in books.withIndex()) {
+            Log.d("Book Adapter", "$index. ${book.title}")
+        }
         notifyDataSetChanged()
-        //notifyItemInserted(books.size - 1)
+        Log.d("BooksAdapter", "Got new ${books.size} books")
     }
 }
 

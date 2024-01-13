@@ -31,11 +31,13 @@ class SearchBooksViewModel : ViewModel() {
 
         fetchBookCover(query) { bookItems ->
             bookItems.forEach {bookItem ->
-                val coverUrl = bookItem?.volumeInfo?.imageLinks?.thumbnail
+                val title = bookItem.volumeInfo.title
+                val coverUrl = bookItem.volumeInfo?.imageLinks?.thumbnail
                     ?: "https://covers.openlibrary.org/b/isbn/9781494563165-M.jpg"
                 val secureCoverUrl = coverUrl.replace("http://", "https://")
-                Log.d("SearchBooksViewModel", "Cover url $secureCoverUrl")
-                fetchedBooks.add(Book(imageUrl = secureCoverUrl))
+                Log.d("SearchBooksViewModel", "Title: $title")
+                Log.d("SearchBooksViewModel", "Cover url: $secureCoverUrl")
+                fetchedBooks.add(Book(imageUrl = secureCoverUrl, title = title))
             }
             callback(fetchedBooks)
         }
@@ -59,9 +61,6 @@ class SearchBooksViewModel : ViewModel() {
             override fun onFailure(call: Call<GoogleBooksResponse>, t: Throwable) {
                 callback(emptyList())
             }
-
         })
-
-
     }
 }

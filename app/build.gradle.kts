@@ -14,8 +14,8 @@ android {
         applicationId = "com.aswindev.epicreads"
         minSdk = 24
         targetSdk = 34
-        versionCode = 7
-        versionName = "1.6"
+        versionCode = 9
+        versionName = "1.8"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -76,5 +76,4 @@ dependencies {
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-
 }
