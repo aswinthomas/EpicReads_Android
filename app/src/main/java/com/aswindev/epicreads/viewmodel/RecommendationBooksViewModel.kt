@@ -1,25 +1,29 @@
-package com.aswindev.epicreads
+package com.aswindev.epicreads.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.aswindev.epicreads.Book
+import com.aswindev.epicreads.network.BookItem
+import com.aswindev.epicreads.BuildConfig
+import com.aswindev.epicreads.network.GoogleBooksResponse
+import com.aswindev.epicreads.network.RetrofitClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class BooksViewModel : ViewModel() {
+class RecommendationBooksViewModel : ViewModel() {
     private val booksLiveData = MutableLiveData<List<Book>>()
 
     fun getBooks(): LiveData<List<Book>> = booksLiveData
 
     fun fetchBooks() {
-
         val dummyBooks = getDummyRecommendations()
         fetchBookCovers(dummyBooks) { fetchedBooks ->
             booksLiveData.value = fetchedBooks
         }
-        Log.d("BooksViewModel", "Fetched books $booksLiveData")
+        Log.d("RecommendationBooksViewModel", "Fetched ${booksLiveData.value?.size} books")
     }
 
     private fun fetchBookCovers(books: List<Book>, callback: (List<Book>) -> Unit) {
@@ -33,7 +37,7 @@ class BooksViewModel : ViewModel() {
                     ?: "https://covers.openlibrary.org/b/isbn/9781494563165-M.jpg"
                 val secureCoverUrl = coverUrl.replace("http://", "https://")
                 val updatedBook = book.copy(imageUrl = secureCoverUrl)
-                Log.d("MainActivity", "Cover url $secureCoverUrl")
+                Log.d("RecommendationBooksViewModel", "Cover url $secureCoverUrl")
 
                 fetchedBooks[index] = updatedBook
                 fetchCounter++
@@ -55,7 +59,7 @@ class BooksViewModel : ViewModel() {
                     val bookItems = response.body()?.items ?: emptyList()
                     callback(bookItems)
                 } else {
-                    Log.d("BooksViewModel", "Unable to fetch from GoogleBooks ${response.toString()}")
+                    Log.d("RecommendationBooksViewModel", "Unable to fetch from GoogleBooks ${response.toString()}")
                     callback(emptyList())
                 }
             }

@@ -5,14 +5,8 @@ import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
-import com.aswindev.epicreads.Book
-import com.aswindev.epicreads.BooksAdapter
-import com.aswindev.epicreads.BooksViewModel
+import androidx.fragment.app.commit
 import com.aswindev.epicreads.R
 import com.aswindev.epicreads.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -20,53 +14,17 @@ import com.google.firebase.auth.FirebaseAuth
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var toggle: ActionBarDrawerToggle
-    private lateinit var viewModel: BooksViewModel
+    private val discoverFragment by lazy { DiscoverFragment() }
+    private val favoritesFragment by lazy { FavoritesFragment() }
+    private val searchFragment by lazy { SearchFragment() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setupActionBar()
-        setupDrawerItems()
-        viewModel = ViewModelProvider(this).get(BooksViewModel::class.java)
-        viewModel.getBooks().observe(this, Observer { books ->
-            populateRecommendations(books)
-        })
-
-        if (savedInstanceState == null) {
-            viewModel.fetchBooks()
-        }
-    }
-
-    private fun populateRecommendations(books: List<Book>) {
-        if (books.isEmpty()) {
-            binding.textViewWelcomeTitle.setText("Welcome to EpicReads")
-            binding.recyclerView.visibility = View.GONE
-            binding.textViewNoBooks.visibility = View.VISIBLE
-        } else {
-            binding.textViewWelcomeTitle.setText("Your Recommendations")
-            binding.recyclerView.visibility = View.VISIBLE
-            binding.textViewNoBooks.visibility = View.GONE
-            val spanCount = when (resources.configuration.orientation) {
-                Configuration.ORIENTATION_PORTRAIT -> 2
-                else -> 4
-            }
-            binding.recyclerView.layoutManager = GridLayoutManager(this, spanCount)
-            binding.recyclerView.adapter = BooksAdapter(books)
-        }
-    }
-
-
-    override fun onPostCreate(savedInstanceState: Bundle?) {
-        super.onPostCreate(savedInstanceState)
-        // Sync the toggle state after onRestoreInstanceState has occurred.
-        toggle.syncState()
-    }
-
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-        // Pass any configuration change to the drawer toggle
-        toggle.onConfigurationChanged(newConfig)
+        setupDrawerNav()
+        setupBottomNav()
     }
 
     private fun setupActionBar() {
@@ -80,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         toggle.syncState()
     }
 
-    private fun setupDrawerItems() {
+    private fun setupDrawerNav() {
         binding.navView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.nav_sign_out -> {
@@ -90,6 +48,41 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
+    }
+
+    private fun setupBottomNav() {
+        binding.bottomNavView.setOnItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.bottom_nav_discover -> {
+                    supportFragmentManager.commit {
+                        replace(R.id.frame_content, discoverFragment)
+                    }
+                }
+                R.id.bottom_nav_search -> {
+                    supportFragmentManager.commit {
+                        replace(R.id.frame_content, searchFragment)
+                    }
+                }
+                else -> {
+                    supportFragmentManager.commit {
+                        replace(R.id.frame_content, favoritesFragment)
+                    }
+                }
+            }
+            true
+        }
+    }
+
+    override fun onPostCreate(savedInstanceState: Bundle?) {
+        super.onPostCreate(savedInstanceState)
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        toggle.syncState()
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        // Pass any configuration change to the drawer toggle
+        toggle.onConfigurationChanged(newConfig)
     }
 
     override fun onResume() {

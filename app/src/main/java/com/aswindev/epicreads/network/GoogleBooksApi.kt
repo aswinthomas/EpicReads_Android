@@ -1,4 +1,4 @@
-package com.aswindev.epicreads
+package com.aswindev.epicreads.network
 
 import retrofit2.Call
 import retrofit2.http.GET
