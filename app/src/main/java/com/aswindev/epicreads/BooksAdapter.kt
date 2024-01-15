@@ -10,10 +10,10 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.target.Target
 
 interface OnBookItemClickListener {
-    fun onBookItemClick(book: Book)
+    fun onClick(book: Book)
 }
 
-class BooksAdapter(private val books: MutableList<Book>, private val onClickListener: OnBookItemClickListener? = null) :
+class BooksAdapter(private val books: MutableList<Book>, private val onBookItemClickListener: OnBookItemClickListener? = null) :
     RecyclerView.Adapter<BooksAdapter.ViewHolder>() {
 
     override fun getItemCount() = books.size
@@ -26,7 +26,7 @@ class BooksAdapter(private val books: MutableList<Book>, private val onClickList
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(books[position])
         holder.itemView.setOnClickListener {
-            onClickListener?.onBookItemClick(books[position])
+            onBookItemClickListener?.onClick(books[position])
         }
     }
 

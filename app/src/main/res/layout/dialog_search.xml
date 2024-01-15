@@ -10,13 +10,13 @@
         android:id="@+id/edit_text_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:autofillHints="Search by book title"
+        android:autofillHints="book"
         android:imeOptions="actionSearch"
         android:inputType="text"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Cats" />
+        android:hint="Search by book title" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

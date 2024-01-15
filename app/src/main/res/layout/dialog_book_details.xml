@@ -49,13 +49,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/text_view_authors" />
 
-    <com.google.android.material.checkbox.MaterialCheckBox
-        android:id="@+id/check_box_favorites"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add to Favorites"
-        android:layout_marginTop="14dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_view_authors_value" />
+<!--    <com.google.android.material.checkbox.MaterialCheckBox-->
+<!--        android:id="@+id/check_box_favorites"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Add to Favorites"-->
+<!--        android:layout_marginTop="14dp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/text_view_authors_value" />-->
 </androidx.constraintlayout.widget.ConstraintLayout>

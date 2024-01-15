@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.aswindev.epicreads.Book
 import com.aswindev.epicreads.BooksAdapter
 import com.aswindev.epicreads.OnBookItemClickListener
+import com.aswindev.epicreads.data.AppDatabase
 import com.aswindev.epicreads.databinding.DialogBookDetailsBinding
 import com.aswindev.epicreads.databinding.DialogSearchBinding
 import com.aswindev.epicreads.databinding.FragmentSearchBinding
@@ -73,12 +74,12 @@ class SearchFragment : Fragment() {
     private fun createViewModel() {
         val dialogBinding = DialogBookDetailsBinding.inflate(layoutInflater)
         val listener = object : OnBookItemClickListener {
-            override fun onBookItemClick(book: Book) {
+            override fun onClick(book: Book) {
                 val title = book.title + ": " + book.subtitle
                 var authors = ""
                 for ((index, author) in book.authors.withIndex()) {
                     authors += author
-                    if (index < book.authors.size-1) {
+                    if (index < book.authors.size - 1) {
                         authors += ", "
                     }
                 }
@@ -87,15 +88,22 @@ class SearchFragment : Fragment() {
                 AlertDialog.Builder(requireContext())
                     .setTitle("Book Details")
                     .setView(dialogBinding.root)
-                    .setPositiveButton("Ok") { _, _ ->
-
+                    .setPositiveButton("Ok") { dialog, which ->
+                        dialog.dismiss()
+                    }
+                    .setNeutralButton("Add to Favorites") { dialog, which ->
+                        viewModel.insertBook(book)
+                        dialog.dismiss()
                     }
                     .show()
             }
         }
         adapter = BooksAdapter(mutableListOf(), listener)
         binding.recyclerView.adapter = adapter
-        viewModel = ViewModelProvider(this).get(SearchBooksViewModel::class.java)
+        viewModel = ViewModelProvider(
+            this,
+            ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
+        ).get(SearchBooksViewModel::class.java)
         viewModel.getBooks().observe(viewLifecycleOwner, Observer { books ->
             adapter.update(books)
         })

@@ -1,15 +1,16 @@
 package com.aswindev.epicreads.network
 
-import retrofit2.Call
+
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface GoogleBooksApiService {
     @GET("volumes")
-    fun searchBooks(
+    suspend fun searchBooks(
         @Query("q") query: String,
         @Query("key") apiKey: String
-    ): Call<GoogleBooksResponse>
+    ): Response<GoogleBooksResponse>
 }
 
 data class GoogleBooksResponse(

@@ -10,14 +10,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import com.aswindev.epicreads.Book
 import com.aswindev.epicreads.BooksAdapter
-import com.aswindev.epicreads.viewmodel.RecommendationBooksViewModel
+import com.aswindev.epicreads.viewmodel.DiscoverBooksViewModel
 import com.aswindev.epicreads.databinding.FragmentDiscoverBinding
 
-class DiscoverFragment: Fragment() {
+class DiscoverFragment : Fragment() {
     private lateinit var binding: FragmentDiscoverBinding
-    private lateinit var viewModel: RecommendationBooksViewModel
+    private lateinit var viewModel: DiscoverBooksViewModel
     private lateinit var adapter: BooksAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -35,7 +34,7 @@ class DiscoverFragment: Fragment() {
     private fun createViewModel(savedInstanceState: Bundle?) {
         adapter = BooksAdapter(mutableListOf())
         binding.recyclerView.adapter = adapter
-        viewModel = ViewModelProvider(this).get(RecommendationBooksViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(DiscoverBooksViewModel::class.java)
         viewModel.getBooks().observe(viewLifecycleOwner, Observer { books ->
             adapter.update(books)
         })
