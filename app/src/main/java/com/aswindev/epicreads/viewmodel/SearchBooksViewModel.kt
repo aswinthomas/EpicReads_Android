@@ -60,7 +60,7 @@ class SearchBooksViewModel(application: Application) : AndroidViewModel(applicat
                     imageUrl = secureCoverUrl,
                     title = title ?: "",
                     subtitle = subtitle ?: "",
-                    authors = authors
+                    authors = authors?: emptyList()
                 )
             )
         }
@@ -75,6 +75,7 @@ class SearchBooksViewModel(application: Application) : AndroidViewModel(applicat
                     subtitle = book.subtitle,
                     authors = book.authors,
                     isbn = book.isbn,
+                    imageUrl = book.imageUrl,
                     personalNotes = null
                 )
             )

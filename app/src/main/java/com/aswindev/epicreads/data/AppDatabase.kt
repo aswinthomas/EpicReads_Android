@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
-@Database(entities = [BookDetails::class], version = 1)
+@Database(entities = [BookDetails::class], version = 4)
 @TypeConverters(ListStringConverter::class)
 abstract class AppDatabase: RoomDatabase() {
 
@@ -20,7 +20,8 @@ abstract class AppDatabase: RoomDatabase() {
                     context,
                     AppDatabase::class.java,
                     "app-database"
-                ).build()
+                ).fallbackToDestructiveMigration()
+                    .build()
                 DB_INSTANCE = instance
                 instance
             }

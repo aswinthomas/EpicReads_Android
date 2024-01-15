@@ -55,9 +55,11 @@ class BooksAdapter(private val books: MutableList<Book>, private val onBookItemC
 }
 
 data class Book(
+    val id: Int = 0, //internal id in DB
     val title: String = "",
     val subtitle: String = "",
     val isbn: String = "",
     val imageUrl: String = "",
-    val authors: List<String> = listOf()
+    val authors: List<String> = listOf(),
+    val notes: String = ""
 )

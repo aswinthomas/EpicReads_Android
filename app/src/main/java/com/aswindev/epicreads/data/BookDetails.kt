@@ -6,10 +6,12 @@ import androidx.room.TypeConverters
 
 @Entity(tableName = "book_details")
 data class BookDetails(
-    @PrimaryKey val isbn: String,
+    @PrimaryKey (autoGenerate = true) val id: Int = 0,
+    val isbn: String,
     val title: String,
     val subtitle: String?,
     @TypeConverters(ListStringConverter::class)
-    val authors: List<String>,
+    val authors: List<String>?,
+    val imageUrl: String?,
     val personalNotes: String?
 )

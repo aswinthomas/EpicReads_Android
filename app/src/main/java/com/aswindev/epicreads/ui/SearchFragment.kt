@@ -72,8 +72,21 @@ class SearchFragment : Fragment() {
     }
 
     private fun createViewModel() {
-        val dialogBinding = DialogBookDetailsBinding.inflate(layoutInflater)
-        val listener = object : OnBookItemClickListener {
+        val listener = onBookItemClickListener()
+        adapter = BooksAdapter(mutableListOf(), listener)
+        binding.recyclerView.adapter = adapter
+        viewModel = ViewModelProvider(
+            this,
+            ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
+        ).get(SearchBooksViewModel::class.java)
+        viewModel.getBooks().observe(viewLifecycleOwner, Observer { books ->
+            adapter.update(books)
+        })
+    }
+
+    private fun onBookItemClickListener() =
+        object : OnBookItemClickListener {
+            val dialogBinding = DialogBookDetailsBinding.inflate(layoutInflater)
             override fun onClick(book: Book) {
                 val title = book.title + ": " + book.subtitle
                 var authors = ""
@@ -85,6 +98,11 @@ class SearchFragment : Fragment() {
                 }
                 dialogBinding.textViewBookTitleValue.setText(title)
                 dialogBinding.textViewAuthorsValue.setText(authors)
+
+                // remove any parent view if exists
+                val parentView = dialogBinding.root.parent as? ViewGroup
+                parentView?.removeView(dialogBinding.root)
+
                 AlertDialog.Builder(requireContext())
                     .setTitle("Book Details")
                     .setView(dialogBinding.root)
@@ -94,20 +112,9 @@ class SearchFragment : Fragment() {
                     .setNeutralButton("Add to Favorites") { dialog, which ->
                         viewModel.insertBook(book)
                         dialog.dismiss()
-                    }
-                    .show()
+                    }.show()
             }
         }
-        adapter = BooksAdapter(mutableListOf(), listener)
-        binding.recyclerView.adapter = adapter
-        viewModel = ViewModelProvider(
-            this,
-            ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
-        ).get(SearchBooksViewModel::class.java)
-        viewModel.getBooks().observe(viewLifecycleOwner, Observer { books ->
-            adapter.update(books)
-        })
-    }
 
     private fun hideKeyboard() {
         val inputMethodManager = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager

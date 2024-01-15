@@ -22,6 +22,6 @@ interface BookDetailsDao {
     @Update
     suspend fun updateBook(bookDetails: BookDetails)
 
-    @Query("DELETE FROM book_details WHERE isbn = :isbn")
-    suspend fun deleteBook(isbn: String)
+    @Query("DELETE FROM book_details WHERE id = :id")
+    suspend fun deleteBook(id: Int)
 }
