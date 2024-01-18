@@ -5,9 +5,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.aswindev.epicreads.Book
+import com.aswindev.epicreads.ui.Book
 import com.aswindev.epicreads.network.GoogleBooksService
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class DiscoverBooksViewModel : ViewModel() {
@@ -27,12 +30,14 @@ class DiscoverBooksViewModel : ViewModel() {
 
     private suspend fun fetchBookCovers(books: List<Book>): List<Book> {
         val fetchedBooksDeferred = books.map { book ->
-            inspectBook(book)
+            viewModelScope.async {
+                fetchBook(book)
+            }
         }
-        return fetchedBooksDeferred
+        return fetchedBooksDeferred.awaitAll()
     }
 
-    private suspend fun inspectBook(book: Book): Book {
+    private suspend fun fetchBook(book: Book): Book {
         val bookItems = GoogleBooksService.fetchBook(isbn = book.isbn)
         val bookItem = bookItems.firstOrNull()
         val title = bookItem?.volumeInfo?.title

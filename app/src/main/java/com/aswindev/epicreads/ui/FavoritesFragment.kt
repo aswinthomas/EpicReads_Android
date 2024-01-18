@@ -9,10 +9,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
-import com.aswindev.epicreads.Book
-import com.aswindev.epicreads.BooksAdapter
-import com.aswindev.epicreads.OnBookItemClickListener
 import com.aswindev.epicreads.databinding.DialogBookDetailsBinding
 import com.aswindev.epicreads.databinding.FragmentFavoritesBinding
 import com.aswindev.epicreads.viewmodel.FavoriteBooksViewModel
@@ -45,7 +43,7 @@ class FavoritesFragment : Fragment() {
 
     private fun createViewModel() {
         val listener = onBookItemClickedListener()
-        val adapter = BooksAdapter(mutableListOf(), listener)
+        val adapter = BooksAdapter(mutableListOf(), lifecycleScope, listener)
         binding.recyclerView.adapter = adapter
         viewModel = ViewModelProvider(
             this,

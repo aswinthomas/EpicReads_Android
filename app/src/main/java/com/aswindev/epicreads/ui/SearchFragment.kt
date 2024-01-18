@@ -4,23 +4,16 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
-import com.aswindev.epicreads.Book
-import com.aswindev.epicreads.BooksAdapter
-import com.aswindev.epicreads.OnBookItemClickListener
-import com.aswindev.epicreads.data.AppDatabase
 import com.aswindev.epicreads.databinding.DialogBookDetailsBinding
 import com.aswindev.epicreads.databinding.DialogSearchBinding
 import com.aswindev.epicreads.databinding.FragmentSearchBinding
@@ -73,7 +66,7 @@ class SearchFragment : Fragment() {
 
     private fun createViewModel() {
         val listener = onBookItemClickListener()
-        adapter = BooksAdapter(mutableListOf(), listener)
+        adapter = BooksAdapter(mutableListOf(), lifecycleScope, listener)
         binding.recyclerView.adapter = adapter
         viewModel = ViewModelProvider(
             this,

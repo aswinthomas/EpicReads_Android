@@ -1,6 +1,8 @@
 package com.aswindev.epicreads.ui
 
+import android.content.BroadcastReceiver
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,9 +10,14 @@ import android.util.Log
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.fragment.app.commit
+import com.aswindev.epicreads.BroadcastMessageCallback
+import com.aswindev.epicreads.CustomBroadcastReceiver
 import com.aswindev.epicreads.R
 import com.aswindev.epicreads.databinding.ActivityMainBinding
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.HiltAndroidApp
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -18,6 +25,7 @@ class MainActivity : AppCompatActivity() {
     private val discoverFragment by lazy { DiscoverFragment() }
     private val favoritesFragment by lazy { FavoritesFragment() }
     private val searchFragment by lazy { SearchFragment() }
+    private lateinit var broadcastReceiver: BroadcastReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +34,33 @@ class MainActivity : AppCompatActivity() {
         setupActionBar()
         setupDrawerNav()
         setupBottomNav()
+        setupReceivers()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val intentFilter = IntentFilter().apply {
+            addAction(Intent.ACTION_AIRPLANE_MODE_CHANGED)
+            addAction(Intent.ACTION_BATTERY_LOW)
+        }
+        registerReceiver(broadcastReceiver, intentFilter)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        unregisterReceiver(broadcastReceiver)
+    }
+
+    private fun setupReceivers() {
+        broadcastReceiver = CustomBroadcastReceiver(object: BroadcastMessageCallback {
+            override fun showMessage(str: String) {
+                val snackbar = Snackbar.make(binding.fragmentContainerView, str, Snackbar.LENGTH_LONG)
+                snackbar.anchorView = binding.bottomNavView
+                snackbar.show()
+            }
+
+        })
+
     }
 
     private fun setupActionBar() {
@@ -56,17 +91,17 @@ class MainActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.bottom_nav_discover -> {
                     supportFragmentManager.commit {
-                        replace(R.id.frame_content, discoverFragment)
+                        replace(R.id.fragment_container_view, discoverFragment)
                     }
                 }
                 R.id.bottom_nav_search -> {
                     supportFragmentManager.commit {
-                        replace(R.id.frame_content, searchFragment)
+                        replace(R.id.fragment_container_view, searchFragment)
                     }
                 }
                 else -> {
                     supportFragmentManager.commit {
-                        replace(R.id.frame_content, favoritesFragment)
+                        replace(R.id.fragment_container_view, favoritesFragment)
                     }
                 }
             }

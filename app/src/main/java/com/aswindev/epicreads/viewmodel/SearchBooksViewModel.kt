@@ -5,21 +5,13 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.aswindev.epicreads.Book
-import com.aswindev.epicreads.network.BookItem
-import com.aswindev.epicreads.BuildConfig
+import com.aswindev.epicreads.ui.Book
 import com.aswindev.epicreads.data.AppDatabase
 import com.aswindev.epicreads.data.BookDetails
-import com.aswindev.epicreads.data.BookDetailsDao
-import com.aswindev.epicreads.network.GoogleBooksResponse
 import com.aswindev.epicreads.network.GoogleBooksService
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.Response
 import java.lang.Exception
 
