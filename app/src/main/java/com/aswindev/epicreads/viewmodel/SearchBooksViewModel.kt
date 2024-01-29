@@ -27,7 +27,7 @@ class SearchBooksViewModel(application: Application) : AndroidViewModel(applicat
 
     fun searchBooks(title: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            Log.d("SearchBooksViewModel::searchBooks", "Searching books with title $title")
+            Log.d("SearchBooksViewModel::searchBooks", "Searching books with query $title")
             val fetchedBooks = fetchBookCovers(title)
             booksLiveData.postValue(fetchedBooks)
             Log.d("SearchBooksViewModel::searchBooks", "Got ${booksLiveData.value?.size} books")
@@ -37,12 +37,9 @@ class SearchBooksViewModel(application: Application) : AndroidViewModel(applicat
     private suspend fun fetchBookCovers(title: String): List<Book> {
         val fetchedBooks = mutableListOf<Book>()
 
-        val bookItems = GoogleBooksService.fetchBook(title = title)
+        val bookItems = GoogleBooksService.fetchBook(query = title)
         for (bookItem in bookItems) {
-            val title = bookItem.volumeInfo.title
-            val subtitle = bookItem.volumeInfo.subtitle
-            val authors = bookItem.volumeInfo.authors
-            val coverUrl = bookItem.volumeInfo.imageLinks?.thumbnail
+            val coverUrl = bookItem.thumbnail
                 ?: "https://covers.openlibrary.org/b/isbn/9781494563165-M.jpg"
             val secureCoverUrl = coverUrl.replace("http://", "https://")
             Log.d("SearchBooksViewModel", "Title: $title")
@@ -50,9 +47,9 @@ class SearchBooksViewModel(application: Application) : AndroidViewModel(applicat
             fetchedBooks.add(
                 Book(
                     imageUrl = secureCoverUrl,
-                    title = title ?: "",
-                    subtitle = subtitle ?: "",
-                    authors = authors?: emptyList()
+                    title = bookItem.title ?: "",
+                    subtitle = bookItem.subtitle ?: "",
+                    authors = bookItem.authors ?: emptyList()
                 )
             )
         }

@@ -8,34 +8,25 @@ import java.lang.Exception
 
 object GoogleBooksService {
     private val retrofit = Retrofit.Builder()
-        .baseUrl("https://www.googleapis.com/books/v1/")
+        .baseUrl("https://asia-southeast1-fyndfam.cloudfunctions.net/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
     val service: GoogleBooksApiService = retrofit.create(GoogleBooksApiService::class.java)
 
-    suspend fun fetchBook(isbn: String = "", title: String = ""): List<BookItem> {
-        val queryParams = mutableListOf<String>()
-
-        if (title.isNotEmpty()) {
-            queryParams.add("intitle:$title")
-        }
-        if(isbn.isNotEmpty()) {
-            queryParams.add("isbn:$isbn")
-        }
-        val query = queryParams.joinToString("+")
-        val apiKey = BuildConfig.GOOGLE_BOOKS_API_KEY
-
+    suspend fun fetchBook(query: String): List<BookItem> {
         return try {
-            val response = service.searchBooks(query, apiKey)
+            val response = service.searchBooks(query)
             if (response.isSuccessful) {
+                Log.d("GoogleBooksService", "Got ${(response.body()?.items ?: emptyList()).size}")
+
                 response.body()?.items ?: emptyList()
             } else {
-                Log.d("DiscoverBooksViewModel", "Unable to fetch from GoogleBooks ${response.toString()}")
+                Log.d("GoogleBooksService", "Unable to fetch from GoogleBooks $response")
                 emptyList()
             }
         } catch (e: Exception) {
-            Log.e("DiscoverBooksViewModel", "Error fetching book cover ${e.localizedMessage}")
+            Log.e("GoogleBooksService", "Error fetching book cover ${e.localizedMessage}")
             emptyList()
         }
     }

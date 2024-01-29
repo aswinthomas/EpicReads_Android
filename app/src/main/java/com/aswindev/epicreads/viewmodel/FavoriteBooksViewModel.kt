@@ -52,8 +52,8 @@ class FavoriteBooksViewModel(application: Application) : AndroidViewModel(applic
         Log.d("FavoriteBooksViewModel", "Trying to delete Book ${book.id}")
         viewModelScope.launch(Dispatchers.IO) {
             bookDetailsDao.deleteBook(book.id)
+            fetchBooks()
         }
-        fetchBooks()
     }
 
     fun updateBook(book: Book, notes: String) {
@@ -69,7 +69,7 @@ class FavoriteBooksViewModel(application: Application) : AndroidViewModel(applic
                     personalNotes = notes
                 )
             )
+            fetchBooks()
         }
-        fetchBooks()
     }
 }

@@ -6,10 +6,10 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface GoogleBooksApiService {
-    @GET("volumes")
+    @GET("search-books")
     suspend fun searchBooks(
-        @Query("q") query: String,
-        @Query("key") apiKey: String
+        @Query("query") query: String,
+        //@Query("key") apiKey: String
     ): Response<GoogleBooksResponse>
 }
 
@@ -18,17 +18,30 @@ data class GoogleBooksResponse(
 )
 
 data class BookItem(
-    val volumeInfo: VolumeInfo
-)
-
-data class VolumeInfo(
+    val id: String?,
     val title: String?,
     val subtitle: String?,
+    val description: String?,
+    val publisher: String?,
+    val published_date: String?,
     val authors: List<String>?,
-    val imageLinks: ImageLinks?
+    val page_count: String?,
+    val language: String?,
+    val thumbnail: String?
 )
 
-data class ImageLinks(
-    val thumbnail: String
-)
+//data class BookItem(
+//    val volumeInfo: VolumeInfo
+//)
+//
+//data class VolumeInfo(
+//    val title: String?,
+//    val subtitle: String?,
+//    val authors: List<String>?,
+//    val imageLinks: ImageLinks?
+//)
+//
+//data class ImageLinks(
+//    val thumbnail: String
+//)
 

@@ -38,10 +38,10 @@ class DiscoverBooksViewModel : ViewModel() {
     }
 
     private suspend fun fetchBook(book: Book): Book {
-        val bookItems = GoogleBooksService.fetchBook(isbn = book.isbn)
+        val bookItems = GoogleBooksService.fetchBook(query = book.title)
         val bookItem = bookItems.firstOrNull()
-        val title = bookItem?.volumeInfo?.title
-        val coverUrl = bookItem?.volumeInfo?.imageLinks?.thumbnail
+        val title = bookItem?.title
+        val coverUrl = bookItem?.thumbnail
             ?: "https://covers.openlibrary.org/b/isbn/9781494563165-M.jpg"
         val secureCoverUrl = coverUrl.replace("http://", "https://")
         Log.d("DiscoverBooksViewModel", "Title: $title")
@@ -52,27 +52,25 @@ class DiscoverBooksViewModel : ViewModel() {
 
     private fun getDummyRecommendations(): List<Book> {
         return listOf(
-            Book(isbn = "9780735211292"),
-            Book(isbn = "9781607747307"),
-            Book(isbn = "9781577314806"),
-            Book(isbn = "9780307465351"),
-            Book(isbn = "9781501111105"),
-            Book(isbn = "9780062457738")
-//            ,
-//            Book(isbn = "9781444787011"),
-//            Book(isbn = "9780307465351"),
-//            Book(isbn = "9780062641540"),
-//            Book(isbn = "9781444787011"),
-//            Book(isbn = "9780380810338"),
-//            Book(isbn = "9781451639612"),
-//            Book(isbn = "9780767922715"),
-//            Book(isbn = "9781401958759"),
-//            Book(isbn = "9780062316110"),
-//            Book(isbn = "9781444787011"),
-//            Book(isbn = "9780060835910"),
-//            Book(isbn = "9780307338204"),
-//            Book(isbn = "9780061122415"),
-//            Book(isbn = "9780671027032")
+            Book(title = "The Celestine Prophecy"),
+            Book(title = "The Secret"),
+            Book(title = "The Power of Positive Thinking"),
+            Book(title = "Men Are from Mars, Women Are from Venus"),
+            Book(title = "How to Win Friends and Influence People"),
+            Book(title = "Chicken Soup for the Soul"),
+            Book(title = "The Four Agreements"),
+            Book(title = "The Road Less Traveled: A New Psychology of Love, Traditional Values, and Spiritual Growth"),
+            Book(title = "Project Bold Life: The Proven Formula to Take on Challenges and Achieve Happiness and Success"),
+            Book(title = "The Power of Colors: The Path to Self-Healing and Personal Transformation Through Native American Ancient Wisdom"),
+            Book(title = "Didn't See That Coming: Putting Life Back Together When Your World Falls Apart")
         )
+//        return listOf(
+//            Book(isbn = "9780735211292"),
+//            Book(isbn = "9781607747307"),
+//            Book(isbn = "9781577314806"),
+//            Book(isbn = "9780307465351"),
+//            Book(isbn = "9781501111105"),
+//            Book(isbn = "9780062457738")
+//        )
     }
 }
